@@ -25,14 +25,14 @@ public class DiagnosticCenterServiceImpl  implements IDiagnosticCenterService{
 
 	private TestDao testDao;
 	
-	@Override
-	public String generateCenterId()
-	{
-		long centerCount=centerDao.count();
-		long newId=++centerCount;
-		String centerStringId=String.valueOf(newId);
-		return centerStringId;
-	}
+//	@Override
+//	public String generateCenterId()
+//	{
+//		long centerCount=centerDao.count();
+//		long newId=++centerCount;
+//		String centerStringId=String.valueOf(newId);
+//		return centerStringId;
+//	}
 	
 	@Override
 	public DiagnosticCenter save(DiagnosticCenter center) {
@@ -101,10 +101,10 @@ public class DiagnosticCenterServiceImpl  implements IDiagnosticCenterService{
 		return null;
 	}
 	}
-	@Override
-	public void updateCenter(DiagnosticCenter center)
-
-	{
-		center=centerDao.save(center);
-	}
+//	@Override
+//	public void updateCenter(DiagnosticCenter center)
+//
+//	{
+//		center=centerDao.save(center);
+//	}
 }

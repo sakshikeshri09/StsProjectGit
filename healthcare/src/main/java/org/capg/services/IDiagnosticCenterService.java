@@ -16,9 +16,9 @@ public interface IDiagnosticCenterService {
     
     DiagnosticCenter findById(String centerId);
 
-	void updateCenter(DiagnosticCenter center);
-
-	String generateCenterId();
+//	void updateCenter(DiagnosticCenter center);
+//
+//	String generateCenterId();
 	
 	
 }
