@@ -1,6 +1,7 @@
 package org.capg.services;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,8 @@ import org.capg.dao.DiagnosticCenterDao;
 import org.capg.dao.TestDao;
 import org.capg.entities.DiagnosticCenter;
 import org.capg.entities.Test;
+import org.capg.exception.TestNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,15 +81,14 @@ public class TestServiceImpl implements ITestService {
 		if (optional.isPresent()) {
 			Test t = optional.get();
 			return t;
-		} else
-			return null;
+		} 
+		 throw new 	TestNotFoundException("test not exits");
 	}
 
 	@Override
 	public Test removeTest(Test test, DiagnosticCenter center, String testId) {
 		List<Test> list = center.getTests();
-		int count = 0;
-
+//		int count = 0;
 //		for (Test id : list) {
 //			if (id.getTestId().equals(testId)) {
 //				list.remove(count);
@@ -97,16 +99,20 @@ public class TestServiceImpl implements ITestService {
 //			count++;
 //		}
 		
-		for(int i=0;i<list.size();i++) {
+		for(int j=0;j<list.size();j++) {
 			
-			if(list.get(i).getTestId().equals(testId)) {
-				list.remove(i);
-				testDao.delete(list.get(i));
-				center.setTests(list);
+			if(list.get(j).getTestId().equals(testId)) {
+				list.remove(j);
+				testDao.deleteById(testId);
+				centerDao.save(center);
+				break;
 			}
 		}
 
 		return test;
 	}
+		
+		
+	
 
 }

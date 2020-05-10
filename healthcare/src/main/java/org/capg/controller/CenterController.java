@@ -6,12 +6,15 @@ import org.capg.dto.DiagnosticCenterDto;
 import org.capg.dto.TestDto;
 import org.capg.entities.DiagnosticCenter;
 import org.capg.entities.Test;
+import org.capg.exception.CenterNotFoundException;
+import org.capg.exception.TestNotFoundException;
 import org.capg.services.IDiagnosticCenterService;
 import org.capg.services.ITestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @RequestMapping("/centers")
@@ -103,13 +107,31 @@ public class CenterController {
 		ResponseEntity<List<Test>> response=new ResponseEntity<List<Test>>(tests,HttpStatus.OK);
 		return response;
 	}
+	@ExceptionHandler(TestNotFoundException.class)
+    public ResponseEntity<String>handleCenterNotFound(TestNotFoundException ex){
+        String msg=ex.getMessage();
+        ResponseEntity<String>response=new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);
+        return response;
+
+    }
 	
-	
-	
-	
-	
-	
-	
-	
+	@ExceptionHandler(CenterNotFoundException.class)
+    public ResponseEntity<String>handleCenterNotFound(CenterNotFoundException ex){
+        String msg=ex.getMessage();
+        ResponseEntity<String>response=new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);
+        return response;
+
+  }
+//    	@ExceptionHandler(Throwable.class)
+//    public ResponseEntity<String>handleCenterNotFound(Throwable ex){
+//    String msg=ex.getMessage();
+//    ResponseEntity<String>response=new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);
+//    return response;
+//
+//
+//	
+//	
+//	
+//    }	
 	
 }

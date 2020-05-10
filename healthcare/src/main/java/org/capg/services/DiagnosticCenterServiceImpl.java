@@ -8,6 +8,7 @@ import org.capg.dao.DiagnosticCenterDao;
 import org.capg.dao.TestDao;
 import org.capg.entities.DiagnosticCenter;
 import org.capg.entities.Test;
+import org.capg.exception.CenterNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,9 +98,10 @@ public class DiagnosticCenterServiceImpl  implements IDiagnosticCenterService{
 		{
 			DiagnosticCenter center=optional.get();
 			return center;
-		}else {
-		return null;
+		}
+		throw new CenterNotFoundException("center not exists");
 	}
+	
 	}
 //	@Override
 //	public void updateCenter(DiagnosticCenter center)
@@ -107,4 +109,4 @@ public class DiagnosticCenterServiceImpl  implements IDiagnosticCenterService{
 //	{
 //		center=centerDao.save(center);
 //	}
-}
+
