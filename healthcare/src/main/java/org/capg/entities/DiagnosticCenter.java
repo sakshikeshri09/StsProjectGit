@@ -19,7 +19,7 @@ public class DiagnosticCenter {
 	private String centerName;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	protected List<Test> tests = new ArrayList<>();
+	protected List<TestClass> tests = new ArrayList<>();
 	
 // 	@ElementCollection
 // 	private List<Appointment>appointmentList;
@@ -40,11 +40,11 @@ public class DiagnosticCenter {
 		this.centerName = centerName;
 	}
 
-	public List<Test> getTests() {
+	public List<TestClass> getTests() {
 		return tests;
 	}
 
-	public void setTests(List<Test> tests) {
+	public void setTests(List<TestClass> tests) {
 		this.tests = tests;
 	}
 

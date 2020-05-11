@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tests_info")
-public class Test {
+public class TestClass {
 
 	@Id
 	private String testId;
@@ -21,7 +21,7 @@ public class Test {
 	
 
 	
-	public Test() {
+	public TestClass() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

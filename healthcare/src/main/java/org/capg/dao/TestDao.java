@@ -1,11 +1,11 @@
 package org.capg.dao;
 
 
-import org.capg.entities.Test;
+import org.capg.entities.TestClass;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 @Repository
-public interface TestDao  extends JpaRepository<Test,String>{
+public interface TestDao  extends JpaRepository<TestClass,String>{
 
-	Test save(Test test);
+	TestClass save(TestClass test);
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.capg.dao.DiagnosticCenterDao;
 import org.capg.dao.TestDao;
 import org.capg.entities.DiagnosticCenter;
-import org.capg.entities.Test;
+import org.capg.entities.TestClass;
 import org.capg.exception.TestNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +44,8 @@ public class TestServiceImpl implements ITestService {
 	}
 
 	@Override
-	public List<Test> fetchAll() {
-		List<Test> listOfTest = testDao.findAll();
+	public List<TestClass> fetchAll() {
+		List<TestClass> listOfTest = testDao.findAll();
 		return listOfTest;
 	}
 
@@ -57,11 +57,11 @@ public class TestServiceImpl implements ITestService {
 	}
 
 	@Override
-	public Test saveTest(Test test, DiagnosticCenter center) {
+	public TestClass saveTest(TestClass test, DiagnosticCenter center) {
 		// int no=autoGenerate();
 		// String id=generateTestId()+"-"+no;
 
-		List<Test> listTests = center.getTests();
+		List<TestClass> listTests = center.getTests();
 		test.setTestId(center.getCenterName() + "-" + test.getTestName().toLowerCase());
 		listTests.add(test);
 		center.setTests(listTests);
@@ -76,18 +76,18 @@ public class TestServiceImpl implements ITestService {
 	}
 
 	@Override
-	public Test findById(String testId) {
-		Optional<Test> optional = testDao.findById(testId);
+	public TestClass findById(String testId) {
+		Optional<TestClass> optional = testDao.findById(testId);
 		if (optional.isPresent()) {
-			Test t = optional.get();
+			TestClass t = optional.get();
 			return t;
 		} 
 		 throw new 	TestNotFoundException("test not exits");
 	}
 
 	@Override
-	public Test removeTest(Test test, DiagnosticCenter center, String testId) {
-		List<Test> list = center.getTests();
+	public TestClass removeTest(TestClass test, DiagnosticCenter center, String testId) {
+		List<TestClass> list = center.getTests();
 //		int count = 0;
 //		for (Test id : list) {
 //			if (id.getTestId().equals(testId)) {

@@ -7,7 +7,8 @@ import java.util.Optional;
 import org.capg.dao.DiagnosticCenterDao;
 import org.capg.dao.TestDao;
 import org.capg.entities.DiagnosticCenter;
-import org.capg.entities.Test;
+
+import org.capg.entities.TestClass;
 import org.capg.exception.CenterNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,11 +39,11 @@ public class DiagnosticCenterServiceImpl  implements IDiagnosticCenterService{
 	@Override
 	public DiagnosticCenter save(DiagnosticCenter center) {
 		String cId=center.getCenterName()+"@123";
-			List<Test> tests=new ArrayList<>();
+			List<TestClass> tests=new ArrayList<>();
 			tests=center.getTests();
-			Test test1=new Test();
-			Test test2=new Test();
-			Test test3=new Test();
+			TestClass test1=new TestClass();
+			TestClass test2=new TestClass();
+			TestClass test3=new TestClass();
 		
 			//setting id and names of tests
 			test1.setTestName("Blood");

@@ -5,7 +5,7 @@ import javax.tools.Diagnostic;
 import org.capg.dto.DiagnosticCenterDto;
 import org.capg.dto.TestDto;
 import org.capg.entities.DiagnosticCenter;
-import org.capg.entities.Test;
+import org.capg.entities.TestClass;
 import org.capg.exception.CenterNotFoundException;
 import org.capg.exception.TestNotFoundException;
 import org.capg.services.IDiagnosticCenterService;
@@ -71,18 +71,18 @@ public class CenterController {
 	}
 	
 	@PutMapping("/addtest/{centerId}")
-	public ResponseEntity<List<Test>> addTest(@PathVariable("centerId")String centerId,@RequestBody TestDto testDto)
+	public ResponseEntity<List<TestClass>> addTest(@PathVariable("centerId")String centerId,@RequestBody TestDto testDto)
 	{
-		Test test=convertDtoTest(testDto);
+		TestClass test=convertDtoTest(testDto);
 		DiagnosticCenter center=centerService.findById(centerId);
 		test=testService.saveTest(test, center);
-		ResponseEntity<List<Test>> response=new ResponseEntity<List<Test>>(center.getTests(),HttpStatus.OK);
+		ResponseEntity<List<TestClass>> response=new ResponseEntity<List<TestClass>>(center.getTests(),HttpStatus.OK);
 		return response;
 	}
 
 
-	public Test convertDtoTest(TestDto testDto) {
-		Test test=new Test();
+	public TestClass convertDtoTest(TestDto testDto) {
+		TestClass test=new TestClass();
 		test.setTestName(testDto.getTestName());
 		return test;
 	}
@@ -92,7 +92,7 @@ public class CenterController {
 	 {
 		
 		DiagnosticCenter center=centerService.findById(centerId);
-		Test test=testService.findById(testId);
+		TestClass test=testService.findById(testId);
 		testService.removeTest(test,center,testId);
 		ResponseEntity<Boolean> response=new ResponseEntity<>(true,HttpStatus.OK);
 		return response;
@@ -100,11 +100,11 @@ public class CenterController {
 	
 	
 	@GetMapping("show/tests/{centerId}")
-	ResponseEntity<List<Test>> showTests(@PathVariable("centerId")String centerId)
+	ResponseEntity<List<TestClass>> showTests(@PathVariable("centerId")String centerId)
 	{
 		DiagnosticCenter center=centerService.findById(centerId);
-		List<Test>tests=center.getTests();
-		ResponseEntity<List<Test>> response=new ResponseEntity<List<Test>>(tests,HttpStatus.OK);
+		List<TestClass>tests=center.getTests();
+		ResponseEntity<List<TestClass>> response=new ResponseEntity<List<TestClass>>(tests,HttpStatus.OK);
 		return response;
 	}
 	@ExceptionHandler(TestNotFoundException.class)

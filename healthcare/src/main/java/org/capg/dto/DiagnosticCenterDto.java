@@ -3,7 +3,6 @@ package org.capg.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.capg.entities.Test;
 
 public class DiagnosticCenterDto {
 

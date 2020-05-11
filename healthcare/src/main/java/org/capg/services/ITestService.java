@@ -3,16 +3,17 @@ package org.capg.services;
 import java.util.List;
 
 import org.capg.entities.DiagnosticCenter;
-import org.capg.entities.Test;
+import org.capg.entities.TestClass;
+
 
 public interface ITestService {
 
 
-	List<Test> fetchAll();
+	List<TestClass> fetchAll();
 
-	Test findById(String testId);
+	TestClass findById(String testId);
 
-	Test saveTest(Test test, DiagnosticCenter center);
+	TestClass saveTest(TestClass test, DiagnosticCenter center);
 
-	Test removeTest(Test test, DiagnosticCenter center,String testId);
+	TestClass removeTest(TestClass test, DiagnosticCenter center,String testId);
 }
