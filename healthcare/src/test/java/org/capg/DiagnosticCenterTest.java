@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.capg.entities.DiagnosticCenter;
-import org.capg.entities.TestClass;
+
 import org.capg.exception.CenterNotFoundException;
-import org.capg.services.DiagnosticCenterServiceImpl;
-import org.capg.services.IDiagnosticCenterService;
+import org.capg.services.IService;
+import org.capg.services.ServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,11 +21,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 //@SpringBootTest
 @DataJpaTest// for jpa tests
 @ExtendWith(SpringExtension.class)// integrate spring test framework with junit5
-@Import(DiagnosticCenterServiceImpl.class)
+@Import(ServiceImpl.class)
 public class DiagnosticCenterTest {
 
 	@Autowired
-	private IDiagnosticCenterService service;
+	private IService service;
 	
 	@Autowired
 	private EntityManager em;
@@ -37,7 +37,7 @@ public class DiagnosticCenterTest {
 		DiagnosticCenter dc = new DiagnosticCenter();
 		dc.setCenterName(centerName);
 		
-		DiagnosticCenter result = service.save(dc);
+		DiagnosticCenter result = service.addCenter(dc);
 		
 		List<DiagnosticCenter> fetched = em.createQuery("FROM DiagnosticCenter").getResultList();
 		Assertions.assertEquals(1, fetched.size());
@@ -53,7 +53,7 @@ public class DiagnosticCenterTest {
 		dc.setCenterId(centerId);
 		dc.setCenterName(centerName);
 
-		DiagnosticCenter result=service.remove(dc);
+		DiagnosticCenter result=service.removeCenter(dc);
 		
 		List<DiagnosticCenter> fetched=em.createQuery("From DiagnosticCenter").getResultList();
 		int actualSize=fetched.size();
@@ -70,7 +70,7 @@ public class DiagnosticCenterTest {
 		
 		DiagnosticCenter dc=new DiagnosticCenter();
 		dc.setCenterName(centerName);
-		DiagnosticCenter savedCenter=service.save(dc);
+		DiagnosticCenter savedCenter=service.addCenter(dc);
 		
 		List<DiagnosticCenter> result=service.fetchAllCenter();
 		
@@ -87,7 +87,7 @@ public class DiagnosticCenterTest {
 	public void testFindById() {
 		String centerId="abc@123";
 		
-		Executable executable = () -> service.findById(centerId);
+		Executable executable = () -> service.findByCenterId(centerId);
 		Assertions.assertThrows(CenterNotFoundException.class	, executable);
 		
 	}
@@ -101,7 +101,7 @@ public class DiagnosticCenterTest {
 		DiagnosticCenter dc=new DiagnosticCenter();
 		dc.setCenterName(centerName);
 		
-		DiagnosticCenter  center=service.save(dc);
+		DiagnosticCenter  center=service.addCenter(dc);
 		
 		
 	}

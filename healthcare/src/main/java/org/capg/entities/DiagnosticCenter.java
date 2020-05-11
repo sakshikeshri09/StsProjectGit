@@ -15,14 +15,10 @@ public class DiagnosticCenter {
 
 	@Id
 	private String centerId;
-
 	private String centerName;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	protected List<TestClass> tests = new ArrayList<>();
-	
-// 	@ElementCollection
-// 	private List<Appointment>appointmentList;
+	protected List<Test> tests = new ArrayList<>();
 
 	public String getCenterId() {
 		return centerId;
@@ -40,19 +36,12 @@ public class DiagnosticCenter {
 		this.centerName = centerName;
 	}
 
-	public List<TestClass> getTests() {
+	public List<Test> getTests() {
 		return tests;
 	}
 
-	public void setTests(List<TestClass> tests) {
+	public void setTests(List<Test> tests) {
 		this.tests = tests;
 	}
-
-//	public List<Appointment> getAppointmentList() {
-//		return appointmentList;
-//	}
-//	public void setAppointmentList(List<Appointment> appointmentList) {
-//		this.appointmentList = appointmentList;
-//	}
 
 }

@@ -1,16 +1,15 @@
 package org.capg.service;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import org.capg.entities.Test;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import org.capg.entities.*;
-import org.capg.services.ITestService;
-import org.capg.services.TestServiceImpl;
+import org.capg.services.IService;
+import org.capg.services.ServiceImpl;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -22,17 +21,17 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 //@SpringBootTest
 @DataJpaTest// for jpa tests
 @ExtendWith(SpringExtension.class)// integrate spring test framework with junit5
-@Import(TestServiceImpl.class)
+@Import(ServiceImpl.class)
 //importing RoomServiceImpl class as @DatajpaTest will only only search for repositories
 class ServiceImplTests {
 
 	@Autowired
-	private	TestServiceImpl testService;
+	private	IService service;
 	
 	@Autowired
 	private EntityManager em;
 	
-	@Test
+	@org.junit.jupiter.api.Test
 	public void testAddTest() {
 		String testName="corona";
 		
@@ -43,13 +42,13 @@ class ServiceImplTests {
 		dc.setCenterId(centerId);
 		dc.setCenterName(centerName);
 		
-		TestClass test1=new TestClass();
+		Test test1=new Test();
 		test1.setTestName(testName);
-		TestClass result=testService.saveTest(test1, dc);
-		List<TestClass> fetched=em.createQuery("From TestClass").getResultList();
+		Test result=service.addTest(test1, dc);
+		List<Test> fetched=em.createQuery("From TestClass").getResultList();
 		
 		Assertions.assertEquals(1, fetched.size());
-		TestClass expected = fetched.get(0);
+		Test expected = fetched.get(0);
 		Assertions.assertEquals(expected, result);
 		
 		

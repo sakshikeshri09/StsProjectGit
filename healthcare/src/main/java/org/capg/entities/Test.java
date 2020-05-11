@@ -12,25 +12,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tests_info")
-public class TestClass {
+public class Test {
 
 	@Id
 	private String testId;
-	
 	private String testName;
-	
-
-	
-	public TestClass() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-
-	@Override
-	public String toString() {
-		return "Test [testId=" + testId + ", testName=" + testName + "]";
-	}
 	
 	public String getTestId() {
 		return testId;
@@ -44,5 +30,25 @@ public class TestClass {
 	public void setTestName(String testName) {
 		this.testName = testName;
 	}
+	public Test() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		return "Test [testId=" + testId + ", testName=" + testName + "]";
+	}
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return super.equals(obj);
+	}
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
+	}
+	
+	
 	  
 }

@@ -1,15 +1,14 @@
 package org.capg.controller;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.tools.Diagnostic;
-import org.capg.dto.DiagnosticCenterDto;
-import org.capg.dto.TestDto;
 import org.capg.entities.DiagnosticCenter;
-import org.capg.entities.TestClass;
+import org.capg.entities.Test;
 import org.capg.exception.CenterNotFoundException;
 import org.capg.exception.TestNotFoundException;
-import org.capg.services.IDiagnosticCenterService;
-import org.capg.services.ITestService;
+import org.capg.services.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,86 +28,67 @@ import org.springframework.web.bind.annotation.RestController;
 public class CenterController {
 
 	@Autowired
-	private ITestService testService;
-	
-	@Autowired
-	private IDiagnosticCenterService centerService;
-	
+	private IService service;
 	
 	@PostMapping("/addcenter")
-	public ResponseEntity<DiagnosticCenter > addCenter(@RequestBody DiagnosticCenterDto centerDto)
-	{
-		DiagnosticCenter center=convertDto(centerDto);
-		center=centerService.save(center);
+	public ResponseEntity<DiagnosticCenter > addCenter(@RequestBody Map<String,Object> requestData) {
+		DiagnosticCenter center=new DiagnosticCenter();
+		String name=(String)requestData.get("centerName");
+		center.setCenterName(name);
+		center=service.addCenter(center);
 		ResponseEntity<DiagnosticCenter> response=new ResponseEntity<>(center,HttpStatus.OK);
 		return response;
 	}
 
-	
-	public DiagnosticCenter convertDto(DiagnosticCenterDto centerDto) {
-		DiagnosticCenter center=new DiagnosticCenter();
-		center.setCenterName(centerDto.getCenterName());
-		return center;
-	}
-	
-	
 	@GetMapping
-	public ResponseEntity<List<DiagnosticCenter>> showCenter()
-	{
-		List<DiagnosticCenter> listOfDiagnosticCenters=centerService.fetchAllCenter();
+	public ResponseEntity<List<DiagnosticCenter>> showCenter() {
+		List<DiagnosticCenter> listOfDiagnosticCenters=service.fetchAllCenter();
 		ResponseEntity<List<DiagnosticCenter>> response=new ResponseEntity<>(listOfDiagnosticCenters,HttpStatus.OK);
 		return response;
 	}
 	
 	
 	@DeleteMapping("/remove/center/{centerId}")
-	public ResponseEntity<Boolean> deleteCenter(@PathVariable("centerId")String centerId){
-		DiagnosticCenter center=centerService.findById(centerId);
-		center=centerService.remove(center);
+	public ResponseEntity<Boolean> deleteCenter(@PathVariable("centerId")String centerId) {
+		DiagnosticCenter center=service.findByCenterId(centerId);
+		center=service.removeCenter(center);
 		ResponseEntity<Boolean> response=new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		return response;
 		
 	}
 	
 	@PutMapping("/addtest/{centerId}")
-	public ResponseEntity<List<TestClass>> addTest(@PathVariable("centerId")String centerId,@RequestBody TestDto testDto)
-	{
-		TestClass test=convertDtoTest(testDto);
-		DiagnosticCenter center=centerService.findById(centerId);
-		test=testService.saveTest(test, center);
-		ResponseEntity<List<TestClass>> response=new ResponseEntity<List<TestClass>>(center.getTests(),HttpStatus.OK);
+	public ResponseEntity<List<Test>> addTest(@PathVariable("centerId")String centerId,@RequestBody Map<String,Object> requestTestData) {
+		Test test=new Test();
+		String name=(String)requestTestData.get("testName");
+		test.setTestName(name);
+		DiagnosticCenter center=service.findByCenterId(centerId);
+		test=service.addTest(test, center);
+		ResponseEntity<List<Test>> response=new ResponseEntity<List<Test>>(center.getTests(),HttpStatus.OK);
 		return response;
 	}
 
 
-	public TestClass convertDtoTest(TestDto testDto) {
-		TestClass test=new TestClass();
-		test.setTestName(testDto.getTestName());
-		return test;
-	}
-	
 	@DeleteMapping("/remove/test/{centerId}/{testId}")
-	 public ResponseEntity<Boolean> removeTest(@PathVariable("centerId")String centerId,@PathVariable("testId")String testId)
-	 {
-		
-		DiagnosticCenter center=centerService.findById(centerId);
-		TestClass test=testService.findById(testId);
-		testService.removeTest(test,center,testId);
+	 public ResponseEntity<Boolean> removeTest(@PathVariable("centerId")String centerId,@PathVariable("testId")String testId) {
+		DiagnosticCenter center=service.findByCenterId(centerId);
+		Test test=service.findByTestId(testId);
+		service.removeTest(test,center);
 		ResponseEntity<Boolean> response=new ResponseEntity<>(true,HttpStatus.OK);
 		return response;
 	 }
 	
 	
 	@GetMapping("show/tests/{centerId}")
-	ResponseEntity<List<TestClass>> showTests(@PathVariable("centerId")String centerId)
-	{
-		DiagnosticCenter center=centerService.findById(centerId);
-		List<TestClass>tests=center.getTests();
-		ResponseEntity<List<TestClass>> response=new ResponseEntity<List<TestClass>>(tests,HttpStatus.OK);
+	ResponseEntity<List<Test>> showTests(@PathVariable("centerId")String centerId) {
+		DiagnosticCenter center=service.findByCenterId(centerId);
+		List<Test>tests=center.getTests();
+		ResponseEntity<List<Test>> response=new ResponseEntity<List<Test>>(tests,HttpStatus.OK);
 		return response;
 	}
+	
 	@ExceptionHandler(TestNotFoundException.class)
-    public ResponseEntity<String>handleCenterNotFound(TestNotFoundException ex){
+    public ResponseEntity<String>handleCenterNotFound(TestNotFoundException ex) {
         String msg=ex.getMessage();
         ResponseEntity<String>response=new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);
         return response;
@@ -116,22 +96,18 @@ public class CenterController {
     }
 	
 	@ExceptionHandler(CenterNotFoundException.class)
-    public ResponseEntity<String>handleCenterNotFound(CenterNotFoundException ex){
+    public ResponseEntity<String>handleCenterNotFound(CenterNotFoundException ex) {
         String msg=ex.getMessage();
         ResponseEntity<String>response=new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);
         return response;
 
   }
-//    	@ExceptionHandler(Throwable.class)
-//    public ResponseEntity<String>handleCenterNotFound(Throwable ex){
-//    String msg=ex.getMessage();
-//    ResponseEntity<String>response=new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);
-//    return response;
-//
-//
-//	
-//	
-//	
-//    }	
+   	@ExceptionHandler(Throwable.class)
+    public ResponseEntity<String>handleCenterNotFound(Throwable ex) {
+   		String msg=ex.getMessage();
+   		ResponseEntity<String>response=new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);
+   		return response;
+    
+    }	
 	
 }
