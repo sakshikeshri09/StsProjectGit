@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
-@Transactional
+@Service//tells us that its a service class,bean class
+@Transactional// it will automatically opens the transaction and commit transaction 
 public class ServiceImpl  implements IService{
 
 	@Autowired
@@ -31,7 +31,7 @@ public class ServiceImpl  implements IService{
 		String centerStringId=String.valueOf(newId);
 		return centerStringId;
 	}
-	
+	//method to add center with 3 default tests(blood ,sugar,bp)
 	@Override
 	public DiagnosticCenter addCenter(DiagnosticCenter center) {
 		String cId=center.getCenterName()+generateCenterId()+"@123";
@@ -62,24 +62,24 @@ public class ServiceImpl  implements IService{
 			tests.add(test3);
 			
 			center.setCenterId(cId);
-			//center.setTests(tests);
+			//center.setTests(tests); no need to save the tests since we are using cascadingType=all
 			 center=centerDao.save(center);
 			return center;
 		}
 
-	@Override
+	@Override//to delete a particular center
 	public DiagnosticCenter removeCenter(DiagnosticCenter center) {
 		centerDao.delete(center);
 		return center ;
 	}
 
-	@Override
+	@Override//to get all the center list
 	public List<DiagnosticCenter> fetchAllCenter() {
 		List<DiagnosticCenter> listOfCenter=centerDao.findAll();
 		return listOfCenter;
 	}
 
-	@Override
+	@Override//find the center if it exists otherwise return null 
 	public DiagnosticCenter findByCenterId(String centerId) {
 		Optional<DiagnosticCenter> optional=centerDao.findById(centerId);
 		if(optional.isPresent())
@@ -103,7 +103,7 @@ public class ServiceImpl  implements IService{
 		return id;
 	}
 
-	@Override
+	@Override// to add test in particular center id
 	public Test addTest(Test test, DiagnosticCenter center) {
 		List<Test> listTests = center.getTests();
 		test.setTestId(center.getCenterName() + "-"+generateTestId() + test.getTestName().toLowerCase());
@@ -112,7 +112,7 @@ public class ServiceImpl  implements IService{
 		return test;
 	}
 
-	@Override
+	@Override// to get test 
 	public Test findByTestId(String testId) {
 		Optional<Test> optional = testDao.findById(testId);
 		if (optional.isPresent()) {
@@ -122,7 +122,7 @@ public class ServiceImpl  implements IService{
 		 throw new 	TestNotFoundException("test not exits");
 	}
 
-	@Override
+	@Override// to remove test from center
 	public Test removeTest(Test test, DiagnosticCenter center) {
 		List<Test> list = center.getTests();
 		list.remove(test);

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController
+@RestController//it tells that this is a spring rest controller class
 @RequestMapping("/centers")
 public class CenterController {
 
@@ -86,7 +86,7 @@ public class CenterController {
 		ResponseEntity<List<Test>> response=new ResponseEntity<List<Test>>(tests,HttpStatus.OK);
 		return response;
 	}
-	
+	// this annotation it is a method level to handle exceptions
 	@ExceptionHandler(TestNotFoundException.class)
     public ResponseEntity<String>handleCenterNotFound(TestNotFoundException ex) {
         String msg=ex.getMessage();

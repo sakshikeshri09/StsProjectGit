@@ -40,13 +40,18 @@ public class Test {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+		if(this==obj) {
+			return true;
+		}if(obj==null||obj instanceof Test) {
+			return false;
+		}
+		Test test=(Test)obj;
+		return this.testId.equals(test.testId);
 	}
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
-		return super.hashCode();
+		return testId.hashCode();
 	}
 	
 	
