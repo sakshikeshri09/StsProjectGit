@@ -30,14 +30,6 @@ public class Test {
 	public void setTestName(String testName) {
 		this.testName = testName;
 	}
-	public Test() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	@Override
-	public String toString() {
-		return "Test [testId=" + testId + ", testName=" + testName + "]";
-	}
 	@Override
 	public boolean equals(Object obj) {
 		if(this==obj) {

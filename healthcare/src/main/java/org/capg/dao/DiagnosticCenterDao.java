@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DiagnosticCenterDao extends JpaRepository<DiagnosticCenter,String> {
 
-	DiagnosticCenter save(DiagnosticCenter center);
+	
 
 }
