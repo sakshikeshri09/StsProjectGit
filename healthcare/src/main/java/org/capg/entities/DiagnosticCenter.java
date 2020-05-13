@@ -53,7 +53,7 @@ public class DiagnosticCenter {
 	public boolean equals(Object obj) {
 		if(this==obj) {
 			return true;
-		}if(obj==null||obj instanceof DiagnosticCenter) {
+		}if(obj==null||!(obj instanceof DiagnosticCenter)) {
 			return false;
 		}
 		DiagnosticCenter center=(DiagnosticCenter)obj;
