@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-
 @Entity
 @Table(name="tests_info")
 public class Test {
