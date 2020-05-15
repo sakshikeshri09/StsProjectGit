@@ -1,5 +1,6 @@
 package org.capg.entities;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class DiagnosticCenter {
 	@Id
 	private String centerId;
 	private String centerName;
+	private String address;
+	private BigInteger contactNo;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	protected List<Test> tests = new ArrayList<>();
@@ -47,6 +50,22 @@ public class DiagnosticCenter {
 	@Override
 	public int hashCode() {
 		return centerId.hashCode();
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public BigInteger getContactNo() {
+		return contactNo;
+	}
+
+	public void setContactNo(BigInteger contactNo) {
+		this.contactNo = contactNo;
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.tools.Diagnostic;
+
+import org.capg.dto.CenterRequestDto;
 import org.capg.entities.DiagnosticCenter;
 import org.capg.entities.Test;
 import org.capg.exception.CenterNotFoundException;
@@ -29,16 +31,23 @@ public class CenterController {
 
 	@Autowired
 	private IService service;
-	
+
 	@PostMapping("/addcenter")
-	public ResponseEntity<DiagnosticCenter > addCenter(@RequestBody Map<String,Object> requestData) {
+	public ResponseEntity<DiagnosticCenter > addCenter(@RequestBody CenterRequestDto requestData) {
 		DiagnosticCenter center=new DiagnosticCenter();
-		String name=(String)requestData.get("centerName");
-		center.setCenterName(name);
+		center=convertDto(requestData);
 		center=service.addCenter(center);
 		ResponseEntity<DiagnosticCenter> response=new ResponseEntity<>(center,HttpStatus.OK);
 		return response;
 	}
+
+	public DiagnosticCenter convertDto(CenterRequestDto requestData) {
+		DiagnosticCenter center=new DiagnosticCenter();
+		center.setCenterName(requestData.getCenterName());
+		center.setAddress(requestData.getAddress());
+		center.setContactNo(requestData.getContactNo());
+		return center;
+}
 
 	@GetMapping
 	public ResponseEntity<List<DiagnosticCenter>> showCenter() {
@@ -95,7 +104,7 @@ public class CenterController {
 
     }
 	
-	@ExceptionHandler(CenterNotFoundException.class)   
+	@ExceptionHandler(CenterNotFoundException.class)     
     public ResponseEntity<String>handleCenterNotFound(CenterNotFoundException ex) {
         String msg=ex.getMessage();
         ResponseEntity<String>response=new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);

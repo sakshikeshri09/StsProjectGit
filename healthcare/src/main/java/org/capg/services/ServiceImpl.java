@@ -62,6 +62,7 @@ public class ServiceImpl  implements IService{
 			tests.add(test3);
 			
 			center.setCenterId(cId);
+			
 			//center.setTests(tests); no need to save the tests since we are using cascadeType.all
 			 center=centerDao.save(center);
 			return center;
