@@ -22,7 +22,7 @@ public class DiagnosticCenter {
 	private BigInteger contactNo;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	protected List<Test> tests = new ArrayList<>();
+	private List<Test> tests = new ArrayList<>();
 
 	public String getCenterId() {
 		return centerId;

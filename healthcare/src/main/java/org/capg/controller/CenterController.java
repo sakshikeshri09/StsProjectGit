@@ -6,8 +6,10 @@ import java.util.Map;
 import javax.tools.Diagnostic;
 
 import org.capg.dto.CenterRequestDto;
+import org.capg.dto.TestRequestDto;
 import org.capg.entities.DiagnosticCenter;
 import org.capg.entities.Test;
+import org.capg.exception.CenterAlreadyExistsException;
 import org.capg.exception.CenterNotFoundException;
 import org.capg.exception.TestNotFoundException;
 import org.capg.services.IService;
@@ -67,16 +69,21 @@ public class CenterController {
 	}
 	
 	@PutMapping("/addtest/{centerId}")
-	public ResponseEntity<List<Test>> addTest(@PathVariable("centerId")String centerId,@RequestBody Map<String,Object> requestTestData) {
+	public ResponseEntity<List<Test>> addTest(@PathVariable("centerId")String centerId,@RequestBody TestRequestDto requestTestData) {
 		Test test=new Test();
-		String name=(String)requestTestData.get("testName");
-		test.setTestName(name);
+		test=convertTestDto(requestTestData);
 		DiagnosticCenter center=service.findByCenterId(centerId);
 		test=service.addTest(test, center);
 		ResponseEntity<List<Test>> response=new ResponseEntity<List<Test>>(center.getTests(),HttpStatus.OK);
 		return response;
 	}
 
+
+	private Test convertTestDto(TestRequestDto requestTestData) {
+		Test test=new Test();
+		test.setTestName(requestTestData.getTestName());
+		return test;
+	}
 
 	@DeleteMapping("/remove/test/{centerId}/{testId}")
 	 public ResponseEntity<Boolean> removeTest(@PathVariable("centerId")String centerId,@PathVariable("testId")String testId) {
@@ -95,6 +102,17 @@ public class CenterController {
 		ResponseEntity<List<Test>> response=new ResponseEntity<List<Test>>(tests,HttpStatus.OK);
 		return response;
 	}
+	
+	@GetMapping("findby/{id}")
+	public ResponseEntity<DiagnosticCenter> findCenter(@PathVariable("id")String id)
+	{
+		DiagnosticCenter center=new DiagnosticCenter();
+		center=service.findByCenterId(id);
+		ResponseEntity<DiagnosticCenter> response=new ResponseEntity<>(center,HttpStatus.OK);
+		return response;
+		
+		
+	}
 	// this annotation it is a method level to handle exceptions
 	@ExceptionHandler(TestNotFoundException.class)
     public ResponseEntity<String>handleTestNotFound(TestNotFoundException ex) {
@@ -106,6 +124,14 @@ public class CenterController {
 	
 	@ExceptionHandler(CenterNotFoundException.class)     
     public ResponseEntity<String>handleCenterNotFound(CenterNotFoundException ex) {
+        String msg=ex.getMessage();
+        ResponseEntity<String>response=new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);
+        return response;
+
+  }
+	
+	@ExceptionHandler(CenterAlreadyExistsException.class)     
+    public ResponseEntity<String>handleCenterAlreadyFound(CenterAlreadyExistsException ex) {
         String msg=ex.getMessage();
         ResponseEntity<String>response=new ResponseEntity<>(msg,HttpStatus.NOT_FOUND);
         return response;

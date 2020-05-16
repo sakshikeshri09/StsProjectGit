@@ -7,8 +7,10 @@ import org.capg.dao.DiagnosticCenterDao;
 import org.capg.dao.TestDao;
 import org.capg.entities.DiagnosticCenter;
 import org.capg.entities.Test;
+import org.capg.exception.CenterAlreadyExistsException;
 import org.capg.exception.CenterNotFoundException;
 import org.capg.exception.TestNotFoundException;
+import org.capg.exception.CenterAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,10 +33,19 @@ public class ServiceImpl  implements IService{
 		String centerStringId=String.valueOf(newId);
 		return centerStringId;
 	}
-	//method to add center with 3 default tests(blood ,sugar,bp)
+	//method to add center with 3 default tests(blood ,sugar,
 	@Override
 	public DiagnosticCenter addCenter(DiagnosticCenter center) {
-		String cId=center.getCenterName()+generateCenterId()+"@123";
+	
+		List<DiagnosticCenter> tempList=fetchAllCenter();
+		for (DiagnosticCenter element :tempList ) {
+			if(center.getCenterName().equals(element.getCenterName())&&
+					(center.getAddress().equals(element.getAddress()))) {
+				throw new CenterAlreadyExistsException("center already exists");
+				
+			}
+			
+		}	String cId=center.getCenterName()+generateCenterId()+"@123";
 			List<Test> tests=new ArrayList<>();
 			tests=center.getTests();
 			Test test1=new Test();
