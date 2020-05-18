@@ -15,13 +15,29 @@
 </td>
 </tr>
        <tr><td> <label>Address</label></td>
-            <td><input type="text"  name="centerAddress" ngModel required maxlength="20"> </td>
+            <td><input type="text"  name="centerAddress" ngModel required  #address=ngModel maxlength="20"> </td>
+            <td><div *ngIf="address.invalid && (address.dirty || address.touched)" class="myerror">
+                <div *ngIf="address.invalid == true">
+                    <div *ngIf="address.errors.required">
+                        address is required.
+                    </div>
+                </div>
+            </div>
+            </td>
        </tr>  
     <tr>
         <td>
             <label>ContactNo</label>
         </td>
-        <td> <input type="text" maxlength="10"  name="centerNumber" ngModel pattern="[1-9]{9}[0-9]{1}" required></td>
+        <td> <input type="text" maxlength="10"  name="centerNumber" ngModel pattern="[1-9]{9}[0-9]{1}" required  #contact=ngModel></td>
+        <td><div *ngIf="contact.invalid && (contact.dirty || contact.touched)" class="myerror">
+            <div *ngIf="contact.invalid == true">
+                <div *ngIf="contact.errors.required">
+                    contactNo is required.
+                </div>
+            </div>
+        </div>
+        </td>
     </tr>
 <input type="submit" [disabled]="myform.form.invalid"></div>
 </table>

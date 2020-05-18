@@ -4,10 +4,26 @@
 <table border="2"><div class="table-class">
   <tr>  
      <td>  <label>Center Id</label></td> 
-      <td> <input type="text"  name="centerid" ngModel required></td> 
+      <td> <input type="text"  name="centerid" ngModel required #centerId=ngModel></td> 
+      <td><div *ngIf="centerId.invalid && (centerId.dirty || centerId.touched)" class="myerror">
+         <div *ngIf="centerId.invalid == true">
+             <div *ngIf="centerId.errors.required">
+                center Id is required.
+             </div>
+         </div>
+     </div>
+     </td>
    </tr>
        <tr><td> <label>Test Id</label></td>
-            <td><input type="text"  name="testid" ngModel required > </td>
+            <td><input type="text"  name="testid" ngModel required  #testId=ngModel> </td>
+            <td><div *ngIf="testId.invalid && (testId.dirty || testId.touched)" class="myerror">
+               <div *ngIf="testId.invalid == true">
+                   <div *ngIf="testId.errors.required">
+                      test Id is required.
+                   </div>
+               </div>
+           </div>
+           </td>
        </tr>  
 <input type="submit" [disabled]='form.form.invalid'></div>
 </table>

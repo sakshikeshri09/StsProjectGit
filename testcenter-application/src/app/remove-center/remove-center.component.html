@@ -8,7 +8,14 @@
             <label>Center Id</label>
         </td>
         <td>
-            <input type="text"  name="centerId" ngModel required maxlength="20">
+            <input type="text"  name="centerId" ngModel required maxlength="20" #tid=ngModel>
+        </td><td><div *ngIf="tid.invalid && (tid.dirty || tid.touched)" class="myerror">
+            <div *ngIf="tid.invalid == true">
+                <div *ngIf="tid.errors.required">
+                  test id is required.
+                </div>
+            </div>
+        </div>
         </td>
     </tr>
      
