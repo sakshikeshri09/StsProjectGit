@@ -1,0 +1,14 @@
+<br>
+<h3>View-Center</h3> 
+
+<div *ngIf="found">
+<div *ngFor="let c of centerArray">
+   Center name is <b>{{c.centerName}}</b> , Center Id is <b>{{c.centerId}} </b>,
+   Center Address is <b>{{c.address}}</b> , Center ContactNo is <b>{{c.contactNo}} </b>
+   
+   <div *ngFor="let t of c.tests ">
+ TestName is<b>  {{t.testName}} </b>, TestId is <b>{{t.testId}}</b>
+      
+   </div>---------------------------------------------------------------------------
+</div>
+</div>

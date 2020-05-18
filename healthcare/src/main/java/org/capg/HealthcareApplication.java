@@ -22,7 +22,7 @@ public class HealthcareApplication {
 	
 
 	/**
-	 *
+	 *cors stands for cross origin resource sharing
 	 * for handling cross origin requests
 	 */
 	@Bean

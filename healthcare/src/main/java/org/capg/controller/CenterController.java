@@ -3,8 +3,6 @@ package org.capg.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.tools.Diagnostic;
-
 import org.capg.dto.CenterRequestDto;
 import org.capg.dto.TestRequestDto;
 import org.capg.entities.DiagnosticCenter;
