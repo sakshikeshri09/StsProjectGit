@@ -5,12 +5,13 @@
 <table border="2"><div class="table-class">
    <tr>
     <td><label>Center Name</label></td>
-    <td>  <input type="text" name="centerName" ngModel #nameVariable=ngModel required maxlength="20"></td>  
+    <td>  <input type="text" name="centerName" ngModel #nameVariable=ngModel required maxlength="20" ></td>  
     <td><div *ngIf="nameVariable.invalid && (nameVariable.dirty || nameVariable.touched)" class="myerror">
         <div *ngIf="nameVariable.invalid == true">
             <div *ngIf="nameVariable.errors.required">
-                center name is required.
+                Center name is required. | Not be numeric
             </div>
+           
         </div>
     </div>
 </td>

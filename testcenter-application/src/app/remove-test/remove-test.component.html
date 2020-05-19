@@ -29,14 +29,7 @@
 </table>
     </form>
    </div>
-    <div *ngIf="isRemoved" class="result">
-    <!-- {{"centerid is "+ center.centerId}}<br>
-    {{"centerName is "+center.centerName}}<br>
-    {{"centerAddress is "+center.address}}<br>
-    {{"contactno is "+center.contactNo}}<br> -->
-    <div *ngFor="let t of tests">
-       testId is {{t.testId +"   "}}           {{"   testName is "+t.testName}}
-    </div>
+    <div *ngIf="isRemoved" class="result">Test deleted
 </div> 
 
 <div *ngIf="dc" class="error" align="center">
