@@ -1,44 +1,40 @@
-<br>
+<div align="center">
 <h3>Remove-Center</h3> 
 <form #form="ngForm" name="form" (ngSubmit)="removeCenter(form)">
 
     <table border="2"><div class="table-class">
     <tr>
-        <td>
-            <label>Center Id</label>
-        </td>
-        <td>
-            <input type="text"  name="centerId" ngModel required maxlength="20" #tid=ngModel>
-        </td><td><div *ngIf="tid.invalid && (tid.dirty || tid.touched)" class="myerror">
+        <td><label>Center Id</label></td>
+        <td><input type="text"  name="centerId" ngModel required maxlength="20" #tid=ngModel></td>
+        <td><div *ngIf="tid.invalid && (tid.dirty || tid.touched)" class="myerror">
             <div *ngIf="tid.invalid == true">
                 <div *ngIf="tid.errors.required">
                   test id is required.
                 </div>
             </div>
-        </div>
+            </div>
         </td>
     </tr>
      
-    <input type="submit"  [disabled]="form.form.invalid"></div>
+    <input type="submit"  [disabled]="form.form.invalid" ></div>
 </table>
     </form>
-
-    <div *ngIf="removed"><h2>Deleted Center-------------------------------------------------------</h2>
-        {{"centerId id "+foundCenter.centerId}}
-        {{"centerName is "+foundCenter.centerName}}<br>
-        {{"centerAddress is "+foundCenter.address}}<br>
-        {{"contactNo is "+foundCenter.contactNo}}<br>
-        <div *ngFor="let t of foundCenter.tests">
-           testId is {{t.testId}}
-           testName is {{t.testName}}
-        </div>
-
-
-
-    </div>
-  
-  <div *ngIf="dc">
-    <b>"center not exists"</b> 
+</div>
+ 
+<div *ngIf="dc" class="error" align="center">
+    {{"Center not exists with  this centerId"}}
   </div>
-   
+
+    <div *ngIf="isRemoved" class="result" align="center"><h2>Deleted Center</h2>
+        {{"CenterId id "+foundCenter.centerId}}
+        {{"CenterName is "+foundCenter.centerName}}<br>
+        {{"CenterAddress is "+foundCenter.address}}<br>
+        {{"ContactNo is "+foundCenter.contactNo}}<br>
+        <div *ngFor="let t of foundCenter.tests">
+           TestId is {{t.testId}}
+           TestName is {{t.testName}}
+        </div>
+    </div>
+ 
+  
     

@@ -1,0 +1,12 @@
+.heading{
+   text-align:center ;
+   color:red;
+   
+}
+.table-center{
+    
+    text-align:center ; 
+    width:800px;
+    height:60px;
+    border-color:blue;
+}

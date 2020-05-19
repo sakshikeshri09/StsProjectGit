@@ -1,20 +1,20 @@
-<br>
-<h3>Remove-Test</h3> 
+<div align="center">
+<h3>Remove -Test</h3> 
 <form #form="ngForm" name="form"  (ngSubmit)="removeTestFromCenter(form)">
 <table border="2"><div class="table-class">
   <tr>  
-     <td>  <label>Center Id</label></td> 
-      <td> <input type="text"  name="centerid" ngModel required #centerId=ngModel></td> 
+     <td><label>Center Id</label></td> 
+      <td><input type="text"  name="centerid" ngModel required #centerId=ngModel></td> 
       <td><div *ngIf="centerId.invalid && (centerId.dirty || centerId.touched)" class="myerror">
          <div *ngIf="centerId.invalid == true">
              <div *ngIf="centerId.errors.required">
                 center Id is required.
              </div>
          </div>
-     </div>
+         </div>
      </td>
    </tr>
-       <tr><td> <label>Test Id</label></td>
+       <tr><td><label>Test Id</label></td>
             <td><input type="text"  name="testid" ngModel required  #testId=ngModel> </td>
             <td><div *ngIf="testId.invalid && (testId.dirty || testId.touched)" class="myerror">
                <div *ngIf="testId.invalid == true">
@@ -22,25 +22,24 @@
                       test Id is required.
                    </div>
                </div>
-           </div>
+               </div>
            </td>
        </tr>  
 <input type="submit" [disabled]='form.form.invalid'></div>
 </table>
     </form>
-
-    <div *ngIf="removed">
-    {{"centerid is "+ center.centerId}}<br>
+   </div>
+    <div *ngIf="isRemoved" class="result">
+    <!-- {{"centerid is "+ center.centerId}}<br>
     {{"centerName is "+center.centerName}}<br>
     {{"centerAddress is "+center.address}}<br>
-    {{"contactno is "+center.contactNo}}<br>
-    <div *ngFor="let t of center.tests">
-       testId is {{t.testId}}
-       testName is{{t.testName}}
+    {{"contactno is "+center.contactNo}}<br> -->
+    <div *ngFor="let t of tests">
+       testId is {{t.testId +"   "}}           {{"   testName is "+t.testName}}
     </div>
 </div> 
 
-<div *ngIf="dc">
+<div *ngIf="dc" class="error" align="center">
    <b>"test  cannot be removed ... test not exists"</b>
 </div>
     

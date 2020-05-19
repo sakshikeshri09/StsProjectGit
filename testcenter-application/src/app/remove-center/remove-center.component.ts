@@ -11,7 +11,7 @@ import { DiagnosticCenter } from '../model/DiagnosticCenter';
 export class RemoveCenterComponent implements OnInit {
 //comments
   serviceObject:ServiceService;
-  removed=false;
+  isRemoved=false;
   deleted=null;
   dc=null;
   foundCenter:DiagnosticCenter;
@@ -27,21 +27,25 @@ export class RemoveCenterComponent implements OnInit {
    removeCenter(form:any){
      let data=form.value;
      let id=data.centerId;
-    //fing center by center id
-     let result=this.serviceObject.findByCenterId(id);
-     result.subscribe((center:DiagnosticCenter)=>{
-      this.foundCenter=center;
-     })
+   //fing center by center id
+   let result=this.serviceObject.findByCenterId(id);
+   result.subscribe((center:DiagnosticCenter)=>{
+    this.foundCenter=center;
+   },err=>{this.dc=true;
+    console.log("center not deleted because it not exists"+err);
+ })
+
 
      //checks whether
      let result2=this.serviceObject.removeCenter(id);
      result2.subscribe((simpleVariable:boolean)=>{
       this.deleted=simpleVariable;
-      this.removed=true;
+      this.isRemoved=true;
      },err=>{this.dc=true;
       console.log("center not deleted because it not exists"+err);
    })
 
+    
   form.reset();
   }
 }

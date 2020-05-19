@@ -13,8 +13,8 @@ export class RemoveTestComponent implements OnInit {
 //--
   serviceObj:ServiceService;
   center:DiagnosticCenter;
-  removed:boolean;
- 
+  isRemoved:boolean;
+  tests:Array<Test>=[];
   dc=null;
   constructor(serviceObj:ServiceService) {
   this.serviceObj=serviceObj;
@@ -32,15 +32,20 @@ export class RemoveTestComponent implements OnInit {
    
     let result=this.serviceObj.removeTest(tId,cId);
     result.subscribe((variable:boolean)=>{
-      this.removed=variable;
+      this.isRemoved=variable;
      
     },err=>{this.dc=true;
       console.log("err in deleteing test="+err);
      })
-     let dc=this.serviceObj.findByCenterId(cId);
-     dc.subscribe((dcenter:DiagnosticCenter)=>{
-       this.center=dcenter;
-     }) 
+    //  let dc=this.serviceObj.findByCenterId(cId);
+    //  dc.subscribe((dcenter:DiagnosticCenter)=>{
+    //    this.center=dcenter;
+    //  }) 
+    let result2=this.serviceObj.showTests(cId)
+      .subscribe((testList:Test[])=>{
+        this.tests=testList;
+        this.isRemoved=true;
+      })
 
     
     form.reset();

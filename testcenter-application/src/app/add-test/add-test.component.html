@@ -1,30 +1,23 @@
-<br>
+<div align="center">
+
 <h3>Add-Test</h3> 
 <form #form="ngForm" name="form" (ngSubmit)="addTest(form)">
 
     <table border="2"><div class="table-class">
         <tr>
-        <td>
-            <label>Center Id</label>
-        </td>
-        <td>
-            <input type="text"  name="centerId" ngModel required maxlength="20" #id=ngModel>
-        </td>
+        <td><label>Center Id</label></td>
+        <td><input type="text"  name="centerId" ngModel required maxlength="20" #id=ngModel></td>
         <td><div *ngIf="id.invalid && (id.dirty || id.touched)" class="myerror">
-            <div *ngIf="id.invalid == true">
-                <div *ngIf="id.errors.required">
-                    center id is required.
+                <div *ngIf="id.invalid == true">
+                    <div *ngIf="id.errors.required">
+                     center id is required.
+                     </div>
                 </div>
             </div>
-        </div>
         </td>
     </tr><tr>
-       <td>
-        <label>Test Name</label>
-       </td>
-       <td>
-        <input type="text" name="testName" ngModel required maxlength="15" #tid=ngModel>
-       </td>
+       <td><label>Test Name</label></td>
+       <td><input type="text" name="testName" ngModel required maxlength="15" #tid=ngModel></td>
        <td><div *ngIf="tid.invalid && (tid.dirty || tid.touched)" class="myerror">
         <div *ngIf="tid.invalid == true">
             <div *ngIf="tid.errors.required">
@@ -36,10 +29,10 @@
     </tr>
     <input type="submit" [disabled]="form.form.invalid"></div>
 </table>
-    </form>
+    </form></div>
     
-    <div *ngIf="success"><h2>Totall tests in centerId={{foundCenter.centerId}} are----------------</h2>
-     <div *ngFor="let t1 of testArray">
+    <div *ngIf="success" class="result"><h2>Totall tests in centerId:  {{foundCenter.centerId}} are</h2>
+     <div *ngFor="let t1 of testArray" >
         {{"Test Name "+t1.testName}}
         {{"Test Id " +t1.testName}}
 

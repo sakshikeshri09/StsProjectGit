@@ -1,4 +1,5 @@
-<br>
+<div align="center">
+  
 <h3>Add-center-details</h3> 
 <form #myform="ngForm" name="form"  (ngSubmit)="addCenter(myform)">
 <table border="2"><div class="table-class">
@@ -29,33 +30,34 @@
         <td>
             <label>ContactNo</label>
         </td>
-        <td> <input type="text" maxlength="10"  name="centerNumber" ngModel pattern="[1-9]{9}[0-9]{1}" required  #contact=ngModel></td>
+        <td> <input type="text" maxlength="10"   name="centerNumber" ngModel pattern="[1-9]{1}[0-9]{9}" required  #contact=ngModel></td>
         <td><div *ngIf="contact.invalid && (contact.dirty || contact.touched)" class="myerror">
             <div *ngIf="contact.invalid == true">
                 <div *ngIf="contact.errors.required">
                     contactNo is required.
                 </div>
+                
             </div>
         </div>
         </td>
     </tr>
-<input type="submit" [disabled]="myform.form.invalid"></div>
+<button type="submit" [disabled]="myform.form.invalid" class="btn btn-primary" >Submit</button></div>
 </table>
     </form>
-
-    <div *ngIf="added">
-        {{addedCenter.centerName }} already exists....
+</div>
+    <div *ngIf="added" class="error" align="center">
+        center already exists....
       </div> 
   
 
-     <div *ngIf="dc"><h2>Added center details are----------------------------------------------</h2>
-    {{"centerId is "+ addedCenter.centerId}}<br>
-    {{"centerName is "+addedCenter.centerName}}<br>
-    {{"centerAddress is "+addedCenter.address}}<br>
-    {{"contactNo is "+addedCenter.contactNo}}<br>
+     <div *ngIf="dc" class="result"  align="center" ><h2>Added center details are</h2>
+    {{"CenterId is "+ addedCenter.centerId}}<br>
+    {{"CenterName is "+addedCenter.centerName}}<br>
+    {{"CenterAddress is "+addedCenter.address}}<br>
+    {{"ContactNo is "+addedCenter.contactNo}}<br>
     <div *ngFor="let t of addedCenter.tests">
-       testId is {{t.testId}}
-       testName is {{t.testName}}
+       TestId is {{t.testId}}
+       TestName is {{t.testName}}
     </div>
    
   
